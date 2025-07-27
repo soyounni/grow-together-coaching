@@ -1,7 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Users, Sparkles } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const CTA = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    if (!user) {
+      navigate('/auth');
+    }
+  };
+
   return (
     <section className="py-24 bg-gradient-hero relative overflow-hidden">
       {/* Background decorations */}
@@ -38,18 +49,20 @@ const CTA = () => {
               variant="outline" 
               size="lg" 
               className="text-lg px-8 py-4 bg-primary-foreground text-primary hover:bg-primary-foreground/90 border-primary-foreground hover:scale-105 transition-all duration-300 shadow-lg"
+              onClick={handleGetStarted}
             >
               <Heart className="w-5 h-5" />
-              코칭 받아보기
+              {user ? "코칭 받아보기" : "코칭 받아보기"}
               <ArrowRight className="w-5 h-5" />
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               className="text-lg px-8 py-4 bg-transparent text-primary-foreground border-primary-foreground/50 hover:bg-primary-foreground/10 hover:scale-105 transition-all duration-300"
+              onClick={handleGetStarted}
             >
               <Users className="w-5 h-5" />
-              코치로 시작하기
+              {user ? "코치로 시작하기" : "코치로 시작하기"}
             </Button>
           </div>
           

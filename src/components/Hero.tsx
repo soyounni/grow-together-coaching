@@ -1,7 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Users } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    if (!user) {
+      navigate('/auth');
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-subtle">
       {/* Background Image */}
@@ -41,13 +52,23 @@ const Hero = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
-              코칭 체험하기
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="text-lg px-8 py-4"
+              onClick={handleGetStarted}
+            >
+              {user ? "코칭 체험하기" : "시작하기"}
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="warm" size="lg" className="text-lg px-8 py-4">
+            <Button 
+              variant="warm" 
+              size="lg" 
+              className="text-lg px-8 py-4"
+              onClick={handleGetStarted}
+            >
               <Users className="w-5 h-5" />
-              코치로 참여하기
+              {user ? "코치로 참여하기" : "가입하기"}
             </Button>
           </div>
           
